@@ -2,6 +2,7 @@ package br.inf.ids.educacao.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.inject.Inject;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +19,9 @@ public class TipoAvaliacao implements Serializable {
     private String nomeAvaliacao;
     private Double pesoAvaliacao;
 
+    @Inject
+    private EntityManager em;
+
     @JsonIgnore
     @OneToMany(mappedBy = "tipoAvaliacao")
     List<Avaliacao> avaliacoes = new ArrayList<>();
@@ -28,6 +32,7 @@ public class TipoAvaliacao implements Serializable {
     public TipoAvaliacao( String nomeAvaliacao, Double pesoAvaliacao) {
         this.nomeAvaliacao = nomeAvaliacao;
         this.pesoAvaliacao = pesoAvaliacao;
+
     }
 
     public Long getId() {
