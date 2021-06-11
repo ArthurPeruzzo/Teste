@@ -17,4 +17,10 @@ public class AlunoResource {
         entityManager.flush();
         return aluno;
     }
+
+    /*public Aluno encontrarAluno(Aluno aluno){
+        entityManager.find(Aluno, aluno);
+        entityManager.flush();
+        return aluno;
+    }*/
 }

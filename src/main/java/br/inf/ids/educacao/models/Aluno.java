@@ -185,7 +185,7 @@ public class Aluno implements Serializable {
         return totalFaltas;
     }
 
-    public SituacaoEnum getSituacaoFinal(){
+    public SituacaoEnum SituacaoFinal(){
         double porcentagemDaPresenca = 0.0;
         int codigo = 0;
         for(Bimestre bimestre : bimestres){
