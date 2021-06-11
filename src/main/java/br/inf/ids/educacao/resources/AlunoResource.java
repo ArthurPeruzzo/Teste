@@ -1,5 +1,6 @@
 package br.inf.ids.educacao.resources;
 
+import br.inf.ids.educacao.excecoes.Exceptions;
 import br.inf.ids.educacao.models.Aluno;
 
 import javax.enterprise.context.RequestScoped;
@@ -18,9 +19,29 @@ public class AlunoResource {
         return aluno;
     }
 
-    /*public Aluno encontrarAluno(Aluno aluno){
-        entityManager.find(Aluno, aluno);
-        entityManager.flush();
+    public Aluno buscar(Long id) {
+        Aluno aluno;
+        try {
+            aluno = entityManager.find(Aluno.class, id);
+        }catch (RuntimeException e) {
+            throw new Exceptions(id);
+        }
         return aluno;
-    }*/
+    }
+
+    public void update(Aluno aluno) {
+        entityManager.merge(aluno);
+        entityManager.flush();
+    }
+
+    public void delete(Long id) {
+        try{
+            Aluno aluno = buscar(id);
+            entityManager.remove(aluno);
+            entityManager.flush();
+        }catch (IllegalArgumentException e){
+            throw new Exceptions(id);
+        }
+
+    }
 }

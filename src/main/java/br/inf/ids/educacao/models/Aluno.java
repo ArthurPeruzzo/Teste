@@ -130,7 +130,7 @@ public class Aluno implements Serializable {
 
         return agrupados;
     }
-    public double getMediaFinal(){
+    public double MediaFinal(){
         double mediaFinal = 0.0;
         for(NotaBimestre media : mediaAlunoPorBimestre()){
             mediaFinal += media.getNota();
@@ -177,7 +177,7 @@ public class Aluno implements Serializable {
         return agrupados;
     }
 
-    public int getTotalFaltas(){
+    public int TotalFaltas(){
         int totalFaltas=0;
         for(PresencaBimestre falta : somaDasFaltas()){
             totalFaltas += falta.getPresenca();
@@ -189,10 +189,10 @@ public class Aluno implements Serializable {
         double porcentagemDaPresenca = 0.0;
         int codigo = 0;
         for(Bimestre bimestre : bimestres){
-            porcentagemDaPresenca = 100.0 - ((getTotalFaltas() * 100.0) / (bimestre.getdiasLetivosBimestre() * 4.0));
-            if(porcentagemDaPresenca < 75.0 || getMediaFinal() < 5.0){
+            porcentagemDaPresenca = 100.0 - ((TotalFaltas() * 100.0) / (bimestre.getdiasLetivosBimestre() * 4.0));
+            if(porcentagemDaPresenca < 75.0 || MediaFinal() < 5.0){
                 codigo = 2;
-            }else if(porcentagemDaPresenca >= 75.0 && getMediaFinal() >= 6.0){
+            }else if(porcentagemDaPresenca >= 75.0 && MediaFinal() >= 6.0){
                 codigo = 1;
             }else
                 codigo = 3;
