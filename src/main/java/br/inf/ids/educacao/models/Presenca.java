@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Presenca implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private Integer numeroDeFaltas;
 

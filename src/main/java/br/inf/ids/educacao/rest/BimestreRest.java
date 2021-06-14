@@ -20,7 +20,7 @@ public class BimestreRest {
     @Path("/cadastroBimestre")
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
-    public Bimestre cadastrarTipoAvaliacao(Bimestre bimestre){
+    public Bimestre cadastrarBimestre(Bimestre bimestre){
         return bimestreResource.cadastrarBimestre(bimestre);
     }
 
@@ -28,7 +28,7 @@ public class BimestreRest {
     @Path("/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public Bimestre buscarTipoAvaliacao(@PathParam("id") Long id){
+    public Bimestre buscarBimestre(@PathParam("id") Long id){
         return bimestreResource.buscarBimestre(id);
     }
 
@@ -36,14 +36,14 @@ public class BimestreRest {
     @Path("/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deletarTipoAvaliacao(@PathParam("id") Long id){
+    public void deletarBimestre(@PathParam("id") Long id){
         bimestreResource.deleteBimestre(id);
     }
 
     @PUT
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public void uptadeTipoAvaliacao(Bimestre bimestre){
+    public void uptadeBimestre(Bimestre bimestre){
         bimestreResource.updateBimestre(bimestre);
     }
 }

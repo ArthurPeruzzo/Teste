@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Path("/Avaliacao")
+@Path("/avaliacao")
 public class AvaliacaoRest {
 
     @Inject

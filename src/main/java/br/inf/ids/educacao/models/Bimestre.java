@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Bimestre implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private BimestreEnum bimestre;
     private LocalDate inicioBimestre;
@@ -31,6 +31,7 @@ public class Bimestre implements Serializable {
     private List<Presenca> presencas = new ArrayList<>();
 
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "bimestres")
     private List<Aluno> alunos = new ArrayList<>();
 
