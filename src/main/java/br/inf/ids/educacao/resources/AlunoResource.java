@@ -50,10 +50,11 @@ public class AlunoResource {
         return entityManager.createQuery(queryJPQL, Aluno.class).getResultList();
     }
 
-   public List<Aluno> pesquisarAluno(String caractere){
+
+    public List<Aluno> pesquisarAlunos(String caractere){
         String queryJPQL = "SELECT s FROM Aluno s WHERE s.nome LIKE :caractere";
         return entityManager.createQuery(queryJPQL, Aluno.class)
-                .setParameter("nome", "%" + caractere + "%")
+                .setParameter("caractere", "%" + caractere + "%")
                 .getResultList();
     }
 }

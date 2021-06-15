@@ -40,11 +40,11 @@ public class AlunoRest {
     }
 
     @GET
-    @Path("/pesquisarAlunos/{caractere}")
+    @Path("/pesquisarAlunosPorCaractere/{caractere}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<Aluno>  pesquisarAlunos(@PathParam("caractere") String caractere){
-        return alunoResource.pesquisarAluno(caractere);
+    public List<Aluno> pesquisarAlunos(@PathParam("caractere") String caractere){
+        return alunoResource.pesquisarAlunos(caractere);
     }
 
     @DELETE
