@@ -6,6 +6,7 @@ import br.inf.ids.educacao.models.Aluno;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @RequestScoped
 public class AlunoResource {
@@ -13,6 +14,7 @@ public class AlunoResource {
     @Inject
     EntityManager entityManager;
 
+    Aluno aluno;
     public Aluno cadastrarAluno(Aluno aluno){
         entityManager.persist(aluno);
         entityManager.flush();
@@ -42,6 +44,16 @@ public class AlunoResource {
         }catch (IllegalArgumentException e){
             throw new Exceptions(id);
         }
+    }
+    public List<Aluno> buscarTodosOsAlunos(){
+        String queryJPQL = "SELECT s FROM Aluno s";
+        return entityManager.createQuery(queryJPQL, Aluno.class).getResultList();
+    }
 
+   public List<Aluno> pesquisarAluno(String caractere){
+        String queryJPQL = "SELECT s FROM Aluno s WHERE s.nome LIKE :caractere";
+        return entityManager.createQuery(queryJPQL, Aluno.class)
+                .setParameter("nome", "%" + caractere + "%")
+                .getResultList();
     }
 }

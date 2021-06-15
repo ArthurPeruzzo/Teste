@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/alunos")
 public class AlunoRest {
@@ -28,6 +29,22 @@ public class AlunoRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public Aluno buscarAluno(@PathParam("id") Long id){
         return alunoResource.buscar(id);
+    }
+
+    @GET
+    @Path("/buscarTodosAlunos")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<Aluno> buscarTodosOsAlunos(){
+        return alunoResource.buscarTodosOsAlunos();
+    }
+
+    @GET
+    @Path("/pesquisarAlunos/{caractere}")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<Aluno>  pesquisarAlunos(@PathParam("caractere") String caractere){
+        return alunoResource.pesquisarAluno(caractere);
     }
 
     @DELETE

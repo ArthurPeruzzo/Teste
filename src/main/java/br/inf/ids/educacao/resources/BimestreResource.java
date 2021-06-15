@@ -1,12 +1,14 @@
 package br.inf.ids.educacao.resources;
 
 import br.inf.ids.educacao.excecoes.Exceptions;
+import br.inf.ids.educacao.models.Aluno;
 import br.inf.ids.educacao.models.Bimestre;
 import br.inf.ids.educacao.models.TipoAvaliacao;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @RequestScoped
 public class BimestreResource {
