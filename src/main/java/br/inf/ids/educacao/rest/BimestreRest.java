@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/bimestres")
 public class BimestreRest {
@@ -30,6 +31,14 @@ public class BimestreRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public Bimestre buscarBimestre(@PathParam("id") Long id){
         return bimestreResource.buscarBimestre(id);
+    }
+
+    @GET
+    @Path("/listarBimestresPorData")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<Bimestre> listarBimestresPorData(){
+        return bimestreResource.listarBimestresPorData();
     }
 
     @DELETE

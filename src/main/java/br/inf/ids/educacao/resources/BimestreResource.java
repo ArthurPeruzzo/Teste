@@ -46,4 +46,9 @@ public class BimestreResource {
             throw new Exceptions(id);
         }
     }
+
+    public List<Bimestre> listarBimestresPorData(){
+        String queryJPQL = "SELECT s FROM Bimestre s ORDER BY s.inicioBimestre";
+        return entityManager.createQuery(queryJPQL, Bimestre.class).getResultList();
+    }
 }

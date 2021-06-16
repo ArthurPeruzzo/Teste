@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/avaliacao")
 public class AvaliacaoRest {
@@ -28,6 +29,14 @@ public class AvaliacaoRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public Avaliacao buscarAvaliacao(@PathParam("id") Long id){
         return avaliacaoResource.buscarAvaliacao(id);
+    }
+
+    @GET
+    @Path("/listarAvaliacaoPorAvaliacao")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<Avaliacao> listarAvaliacaoPorAvaliacao(){
+        return avaliacaoResource.listarAvaliacaoPorAvaliacao();
     }
 
     @DELETE

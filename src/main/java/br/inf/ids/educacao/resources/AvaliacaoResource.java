@@ -7,6 +7,7 @@ import br.inf.ids.educacao.models.TipoAvaliacao;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @RequestScoped
 public class AvaliacaoResource {
@@ -44,5 +45,11 @@ public class AvaliacaoResource {
             throw new Exceptions(id);
         }
 
+    }
+    public List<Avaliacao> listarAvaliacaoPorAvaliacao(){
+        String queryJPQL = "SELECT s FROM Avaliacao s ORDER BY notaAvaliacao DESC";
+        return entityManager.createQuery(queryJPQL, Avaliacao.class)
+                .setMaxResults(20)
+                .getResultList();
     }
 }

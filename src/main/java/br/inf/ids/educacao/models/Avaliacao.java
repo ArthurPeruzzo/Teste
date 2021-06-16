@@ -15,10 +15,12 @@ public class Avaliacao implements Serializable {
     private Long id;
     private Double notaAvaliacao;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "tipoAvaliacao_id") //nome da chave estrangeira
     private TipoAvaliacao tipoAvaliacao;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "avaliacao_id") //nome da chave estrangeira
     private Bimestre bimestre;

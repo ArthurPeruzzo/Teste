@@ -47,14 +47,19 @@ public class AlunoResource {
     }
     public List<Aluno> buscarTodosOsAlunos(){
         String queryJPQL = "SELECT s FROM Aluno s";
-        return entityManager.createQuery(queryJPQL, Aluno.class).getResultList();
+        return entityManager.createQuery(queryJPQL, Aluno.class)
+                .setMaxResults(3)
+                .getResultList();
     }
 
 
     public List<Aluno> pesquisarAlunos(String caractere){
-        String queryJPQL = "SELECT s FROM Aluno s WHERE s.nome LIKE :caractere";
+        String queryJPQL = "SELECT s FROM Aluno s WHERE UPPER(s.nome) LIKE :caractere";
         return entityManager.createQuery(queryJPQL, Aluno.class)
-                .setParameter("caractere", "%" + caractere + "%")
+                .setMaxResults(3)
+                .setParameter("caractere", "%" + caractere.toUpperCase() + "%")
                 .getResultList();
     }
+
+
 }
