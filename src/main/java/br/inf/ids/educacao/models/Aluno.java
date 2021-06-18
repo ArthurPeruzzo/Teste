@@ -1,13 +1,25 @@
 package br.inf.ids.educacao.models;
 
 import br.inf.ids.educacao.enums.SituacaoEnum;
+import br.inf.ids.educacao.models.DTOS.AlunoDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
-
 @Entity
+@SqlResultSetMapping(
+        name = "mediaFinalAlunoDTO",
+        classes = {
+                @ConstructorResult(
+                        targetClass = AlunoDTO.class,
+                        columns = {
+                                @ColumnResult(name="matricula", type = Long.class),
+                                @ColumnResult(name="media_final", type = Double.class)
+                        }
+                )
+        }
+)
 @Table(name = "tb_aluno")
 public class Aluno implements Serializable {
 
@@ -130,6 +142,7 @@ public class Aluno implements Serializable {
 
         return agrupados;
     }
+
     public double MediaFinal(){
         double mediaFinal = 0.0;
         for(NotaBimestre media : mediaAlunoPorBimestre()){

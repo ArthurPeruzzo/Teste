@@ -22,7 +22,7 @@ public class Avaliacao implements Serializable {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "avaliacao_id") //nome da chave estrangeira
+    @JoinColumn(name = "bimestre_id") //nome da chave estrangeira
     private Bimestre bimestre;
 
     @JsonIgnore

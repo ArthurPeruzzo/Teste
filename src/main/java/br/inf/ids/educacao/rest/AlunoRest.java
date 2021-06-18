@@ -1,6 +1,7 @@
 package br.inf.ids.educacao.rest;
 
 import br.inf.ids.educacao.models.Aluno;
+import br.inf.ids.educacao.models.DTOS.AlunoDTO;
 import br.inf.ids.educacao.resources.AlunoResource;
 
 import javax.inject.Inject;
@@ -47,6 +48,7 @@ public class AlunoRest {
         return alunoResource.pesquisarAlunos(caractere);
     }
 
+
     @DELETE
     @Path("/{id}")
     @Transactional
@@ -60,5 +62,13 @@ public class AlunoRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public void uptadeAluno(Aluno aluno){
         alunoResource.update(aluno);
+    }
+
+    @GET
+    @Path("/mediaFinalAluno")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    public AlunoDTO mediaFinalDoAluno(){
+        return alunoResource.teste();
     }
 }
