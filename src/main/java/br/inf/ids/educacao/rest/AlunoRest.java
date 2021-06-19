@@ -2,6 +2,7 @@ package br.inf.ids.educacao.rest;
 
 import br.inf.ids.educacao.models.Aluno;
 import br.inf.ids.educacao.models.DTOS.AlunoDTO;
+import br.inf.ids.educacao.models.DTOS.notaDasAvaliacoesPorBimestreDTO;
 import br.inf.ids.educacao.resources.AlunoResource;
 
 import javax.inject.Inject;
@@ -65,10 +66,19 @@ public class AlunoRest {
     }
 
     @GET
-    @Path("/mediaFinalAluno")
+    @Path("/mediaFinalAluno/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public AlunoDTO mediaFinalDoAluno(){
-        return alunoResource.teste();
+    public AlunoDTO mediaFinalDoAluno(@PathParam("id") Long id){
+        return alunoResource.mediaFinalDoAluno(id);
+    }
+
+    @GET
+    @Path("/notaDasAvaliacoesPorBimestre/{matricula}/{bimestre}")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<notaDasAvaliacoesPorBimestreDTO> notaDasAvaliacoesPorBimestre
+            (@PathParam("matricula") Long matricula, @PathParam("bimestre") Long bimestre){
+        return alunoResource.notaDasAvaliacoesPorBimestre(matricula, bimestre);
     }
 }

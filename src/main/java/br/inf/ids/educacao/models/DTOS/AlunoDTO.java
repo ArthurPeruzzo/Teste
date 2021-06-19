@@ -1,6 +1,5 @@
 package br.inf.ids.educacao.models.DTOS;
 
-import javax.persistence.NamedNativeQuery;
 import java.io.Serializable;
 
 

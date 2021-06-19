@@ -2,6 +2,7 @@ package br.inf.ids.educacao.models;
 
 import br.inf.ids.educacao.enums.SituacaoEnum;
 import br.inf.ids.educacao.models.DTOS.AlunoDTO;
+import br.inf.ids.educacao.models.DTOS.notaDasAvaliacoesPorBimestreDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ import java.util.*;
                 )
         }
 )
+
 @Table(name = "tb_aluno")
 public class Aluno implements Serializable {
 

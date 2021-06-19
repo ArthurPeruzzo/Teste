@@ -1,6 +1,7 @@
 package br.inf.ids.educacao.models;
 
 import br.inf.ids.educacao.enums.BimestreEnum;
+import br.inf.ids.educacao.models.DTOS.notaDasAvaliacoesPorBimestreDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -12,11 +13,24 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@SqlResultSetMapping(
+        name = "notaDasAvaliacoesPorBimestreDTO",
+        classes = {
+                @ConstructorResult(
+                        targetClass = notaDasAvaliacoesPorBimestreDTO.class,
+                        columns = {
+                                @ColumnResult(name="matricula", type = Long.class),
+                                @ColumnResult(name="bimestre", type = Long.class),
+                                @ColumnResult(name="nota_da_avaliacao", type = Double.class),
+                                @ColumnResult(name="tipo_da_avaliacao", type = String.class)
+                        }
+                )
+        }
+)
 @Table(name = "tb_bimestre")
 public class Bimestre implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private BimestreEnum bimestre;
     private LocalDate inicioBimestre;
@@ -39,7 +53,8 @@ public class Bimestre implements Serializable {
     public Bimestre(){
     }
 
-    public Bimestre(BimestreEnum bimestre, LocalDate inicioBimestre, LocalDate fimBimestre) {
+    public Bimestre(Long id, BimestreEnum bimestre, LocalDate inicioBimestre, LocalDate fimBimestre) {
+        this.id = id;
         this.bimestre = bimestre;
         this.inicioBimestre = inicioBimestre;
         this.fimBimestre = fimBimestre;

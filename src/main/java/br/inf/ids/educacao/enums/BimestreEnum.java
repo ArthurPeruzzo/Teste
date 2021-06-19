@@ -4,5 +4,5 @@ public enum BimestreEnum {
     BIMESTRE_1,
     BIMESTRE_2,
     BIMESTRE_3,
-    BIMESTRE_4;
+    BIMESTRE_4
 }

@@ -4,6 +4,7 @@ import br.inf.ids.educacao.enums.BimestreEnum;
 import br.inf.ids.educacao.excecoes.Exceptions;
 import br.inf.ids.educacao.models.*;
 import br.inf.ids.educacao.models.DTOS.AlunoDTO;
+import br.inf.ids.educacao.models.DTOS.notaDasAvaliacoesPorBimestreDTO;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -70,31 +71,43 @@ public class AlunoResource {
                 .getResultList();
     }
 
-
-
-
-
-   /* public List<Bimestre> relacaoBimestreAluno(){
-        return aluno.getBimestres();
-    }*/
-
-    /*public AlunoDTO teste() {
-        String sql = "select aluno.matricula as matricula, sum(avaliacao.notaavaliacao * tipo_avaliacao.pesoavaliacao / 10)/4 as media_final
-        from tb_aluno aluno
-        inner join tb_alunobimestre aluno_bimestre
-        on aluno.matricula = aluno_bimestre.aluno_id
-        inner join tb_bimestre bimestre
-        on aluno_bimestre.bimestre_id = bimestre.id
-        inner join tb_avaliacao avaliacao
-        on 	bimestre.id = avaliacao.bimestre_id
-        and avaliacao.aluno_id = aluno.matricula
-        inner join tb_tipoavaliacao tipo_avaliacao
-        on avaliacao.tipoavaliacao_id = tipo_avaliacao.id
-        where aluno.matricula = 22553434 --jose
-        group by aluno.matricula";
-        Query q = entityManager.createNativeQuery(sql, "mediaFinalAlunoDTO");
+    public AlunoDTO mediaFinalDoAluno(Long id) {
+        String sql = " select aluno.matricula, sum(avaliacao.notaavaliacao * tipo_avaliacao.pesoavaliacao / 10)/4 as media_final "
+        +" from tb_aluno aluno"
+        +" inner join tb_alunobimestre aluno_bimestre "
+        +" on aluno.matricula = aluno_bimestre.aluno_id "
+        +" inner join tb_bimestre bimestre "
+        +" on aluno_bimestre.bimestre_id = bimestre.id "
+        +" inner join tb_avaliacao avaliacao "
+        +" on 	bimestre.id = avaliacao.bimestre_id "
+        +" and avaliacao.aluno_id = aluno.matricula "
+        +" inner join tb_tipoavaliacao tipo_avaliacao "
+        +" on avaliacao.tipoavaliacao_id = tipo_avaliacao.id "
+        +" where aluno.matricula = :id "
+        +" GROUP BY aluno.matricula ";
+    Query q = entityManager.createNativeQuery(sql, "mediaFinalAlunoDTO").setParameter("id", id);
         return (AlunoDTO) q.getSingleResult();
-    }*/
+    }
+
+    public List<notaDasAvaliacoesPorBimestreDTO> notaDasAvaliacoesPorBimestre(Long matricula, Long bimestre) {
+        String sql =" select aluno.matricula, bimestre.id as bimestre, avaliacao.notaavaliacao as nota_da_avaliacao, tipo_avaliacao.nomeavaliacao as tipo_da_avaliacao "
+        +" from tb_aluno aluno "
+        +"inner join tb_alunobimestre aluno_bimestre "
+        +" on aluno.matricula = aluno_bimestre.aluno_id "
+        +" inner join tb_bimestre bimestre "
+        +" on aluno_bimestre.bimestre_id = bimestre.id "
+        +" inner join tb_avaliacao avaliacao "
+        +" on 	bimestre.id = avaliacao.bimestre_id "
+        +" and avaliacao.aluno_id = aluno.matricula "
+        +" inner join tb_tipoavaliacao tipo_avaliacao "
+        +" on avaliacao.tipoavaliacao_id = tipo_avaliacao.id "
+        +" where aluno.matricula = :matricula and bimestre.id = :bimestre "
+        +" order by bimestre.id ";
+        Query q = entityManager.createNativeQuery(sql, "notaDasAvaliacoesPorBimestreDTO")
+                .setParameter("matricula", matricula)
+                .setParameter("bimestre", bimestre);
+        return q.getResultList();
+    }
 
 
 }
