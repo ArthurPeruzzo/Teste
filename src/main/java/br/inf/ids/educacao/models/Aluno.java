@@ -2,6 +2,7 @@ package br.inf.ids.educacao.models;
 
 import br.inf.ids.educacao.enums.SituacaoEnum;
 import br.inf.ids.educacao.models.DTOS.AlunoDTO;
+import br.inf.ids.educacao.models.DTOS.NotaAlunoPorBimestreDTO;
 import br.inf.ids.educacao.models.DTOS.notaDasAvaliacoesPorBimestreDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,12 +17,26 @@ import java.util.*;
                         targetClass = AlunoDTO.class,
                         columns = {
                                 @ColumnResult(name="matricula", type = Long.class),
+                                @ColumnResult(name="nome", type = String.class),
                                 @ColumnResult(name="media_final", type = Double.class)
                         }
                 )
         }
 )
-
+@SqlResultSetMapping(
+        name = "mediaFinalAlunoPorBimestreDTO",
+        classes = {
+                @ConstructorResult(
+                        targetClass = NotaAlunoPorBimestreDTO.class,
+                        columns = {
+                                @ColumnResult(name="bimestre", type = Long.class),
+                                @ColumnResult(name="matricula", type = Long.class),
+                                @ColumnResult(name="nome", type = String.class),
+                                @ColumnResult(name="mediaFinal", type = Double.class)
+                        }
+                )
+        }
+)
 @Table(name = "tb_aluno")
 public class Aluno implements Serializable {
 

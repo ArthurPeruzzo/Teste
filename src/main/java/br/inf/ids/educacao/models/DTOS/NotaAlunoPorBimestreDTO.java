@@ -1,18 +1,28 @@
 package br.inf.ids.educacao.models.DTOS;
 
-public class AlunoDTO {
+public class NotaAlunoPorBimestreDTO {
 
+    private Long bimestre;
     private Long matricula;
     private String nome;
     private Double mediaFinal;
 
-    public AlunoDTO(){
+    public NotaAlunoPorBimestreDTO() {
     }
 
-    public AlunoDTO(Long matricula, String nome, Double mediaFinal) {
+    public NotaAlunoPorBimestreDTO(Long bimestre, Long matricula, String nome, Double mediaFinal) {
+        this.bimestre = bimestre;
         this.matricula = matricula;
         this.nome = nome;
         this.mediaFinal = mediaFinal;
+    }
+
+    public Long getBimestre() {
+        return bimestre;
+    }
+
+    public void setBimestre(Long bimestre) {
+        this.bimestre = bimestre;
     }
 
     public Long getMatricula() {

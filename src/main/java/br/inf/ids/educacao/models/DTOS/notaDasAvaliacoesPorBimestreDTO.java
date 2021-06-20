@@ -2,9 +2,10 @@ package br.inf.ids.educacao.models.DTOS;
 
 import java.io.Serializable;
 
-public class notaDasAvaliacoesPorBimestreDTO implements Serializable {
+public class notaDasAvaliacoesPorBimestreDTO {
 
     private Long matricula;
+    private String nome;
     private Long bimestre;
     private Double notaDaAvaliacao;
     private String tipoDaAvaliacao;
@@ -12,8 +13,9 @@ public class notaDasAvaliacoesPorBimestreDTO implements Serializable {
     public notaDasAvaliacoesPorBimestreDTO() {
     }
 
-    public notaDasAvaliacoesPorBimestreDTO(Long matricula, Long bimestre, Double notaDaAvaliacao, String tipoDaAvaliacao) {
+    public notaDasAvaliacoesPorBimestreDTO(Long matricula, String nome, Long bimestre, Double notaDaAvaliacao, String tipoDaAvaliacao) {
         this.matricula = matricula;
+        this.nome = nome;
         this.bimestre = bimestre;
         this.notaDaAvaliacao = notaDaAvaliacao;
         this.tipoDaAvaliacao = tipoDaAvaliacao;
@@ -25,6 +27,14 @@ public class notaDasAvaliacoesPorBimestreDTO implements Serializable {
 
     public void setMatricula(Long matricula) {
         this.matricula = matricula;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Long getBimestre() {

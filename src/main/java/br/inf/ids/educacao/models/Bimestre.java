@@ -20,6 +20,7 @@ import java.util.Objects;
                         targetClass = notaDasAvaliacoesPorBimestreDTO.class,
                         columns = {
                                 @ColumnResult(name="matricula", type = Long.class),
+                                @ColumnResult(name="nome", type = String.class),
                                 @ColumnResult(name="bimestre", type = Long.class),
                                 @ColumnResult(name="nota_da_avaliacao", type = Double.class),
                                 @ColumnResult(name="tipo_da_avaliacao", type = String.class)

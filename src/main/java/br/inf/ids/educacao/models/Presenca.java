@@ -1,5 +1,7 @@
 package br.inf.ids.educacao.models;
 
+import br.inf.ids.educacao.models.DTOS.FaltasAlunoDTO;
+import br.inf.ids.educacao.models.DTOS.TotalDeFaltasDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -7,6 +9,32 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@SqlResultSetMapping(
+        name = "faltasAlunoDTO",
+        classes = {
+                @ConstructorResult(
+                        targetClass = FaltasAlunoDTO.class,
+                        columns = {
+                                @ColumnResult(name="bimestre", type = Long.class),
+                                @ColumnResult(name="matricula", type = Long.class),
+                                @ColumnResult(name="nome", type = String.class),
+                                @ColumnResult(name="numeroDeFaltas", type = Integer.class),
+                        }
+                )
+        }
+)
+@SqlResultSetMapping(
+        name = "TotalDeFaltasDTO",
+        classes = {
+                @ConstructorResult(
+                        targetClass = TotalDeFaltasDTO.class,
+                        columns = {
+                                @ColumnResult(name="matricula", type = Long.class),
+                                @ColumnResult(name="totalDeFaltas", type = Integer.class),
+                        }
+                )
+        }
+)
 @Table(name = "tb_presenca")
 public class Presenca implements Serializable {
 
