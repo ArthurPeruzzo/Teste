@@ -215,20 +215,6 @@ public class Aluno implements Serializable {
         return totalFaltas;
     }
 
-    public SituacaoEnum SituacaoFinal(){
-        double porcentagemDaPresenca = 0.0;
-        int codigo = 0;
-        for(Bimestre bimestre : bimestres){
-            porcentagemDaPresenca = 100.0 - ((TotalFaltas() * 100.0) / (bimestre.getdiasLetivosBimestre() * 4.0));
-            if(porcentagemDaPresenca < 75.0 || MediaFinal() < 5.0){
-                codigo = 2;
-            }else if(porcentagemDaPresenca >= 75.0 && MediaFinal() >= 6.0){
-                codigo = 1;
-            }else
-                codigo = 3;
-        }
-        return SituacaoEnum.valor(codigo);
-    }
 
     @Override
     public boolean equals(Object o) {

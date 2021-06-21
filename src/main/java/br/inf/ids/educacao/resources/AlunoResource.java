@@ -25,6 +25,8 @@ public class AlunoResource {
 
     Aluno aluno;
 
+    BimestreResource bimestreResource;
+
     public Aluno cadastrarAluno(Aluno aluno){ //ok
         entityManager.persist(aluno);
         entityManager.flush();
@@ -160,6 +162,24 @@ public class AlunoResource {
         return (TotalDeFaltasDTO) query.getSingleResult();
     }
 
+    public AlunoSituacaoFinalDTO situacaoFinalDoAluno(Long matricula){
+        int codigo = 0;
+        double porcentagemPresenca = 0.0;
+        Long totalDeDiasLetivos = bimestreResource.totalDeDiasLetivos();
+        AlunoDTO aluno = mediaFinalDoAluno(matricula);
+        TotalDeFaltasDTO totalDeFaltas = totalDeFaltasDeUmAluno(matricula);
+
+        porcentagemPresenca = 100.0 - ((totalDeFaltas.getTotalDeFaltas() * 100.0) / totalDeDiasLetivos);
+        if(porcentagemPresenca < 75.0 || aluno.getMediaFinal() < 5.0){
+            codigo = 2;
+        }else if(porcentagemPresenca >= 75.0 && aluno.getMediaFinal() >= 6.0){
+            codigo = 1;
+        }else {
+            codigo = 3;
+        }
+        AlunoSituacaoFinalDTO alunoSituacaoFinal = new AlunoSituacaoFinalDTO(1111l, "joao", 9.8, SituacaoEnum.APROVADO);
+        return alunoSituacaoFinal;
+    }
     /*public SituacaoEnum SituacaoFinal(){
         double porcentagemDaPresenca = 0.0;
         int codigo = 0;

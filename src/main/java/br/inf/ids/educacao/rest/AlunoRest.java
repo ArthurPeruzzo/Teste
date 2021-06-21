@@ -101,12 +101,21 @@ public class AlunoRest {
     }
 
     @GET
-    @Path("/mediaFinalDeUmAlunoEmCadaBimestre/{matricula}")
+    @Path("/mediaFinalDeUmAlunoEmCadaBimestre/{matricula}") //ok
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public  List<NotaAlunoPorBimestreDTO> mediaFinalDeUmAlunoEmCadaBimestre
             (@PathParam("matricula") Long matricula){
         return alunoResource.mediaFinalDeUmAlunoEmCadaBimestre(matricula);
+    }
+
+    @GET
+    @Path("/situacaoFinalDoAluno/{matricula}") //ok
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    public  AlunoSituacaoFinalDTO situacaoFinalDoAluno
+            (@PathParam("matricula") Long matricula){
+        return alunoResource.situacaoFinalDoAluno(matricula);
     }
 
 

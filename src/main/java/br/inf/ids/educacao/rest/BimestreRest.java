@@ -41,6 +41,22 @@ public class BimestreRest {
         return bimestreResource.listarBimestresPorData();
     }
 
+    @GET
+    @Path("/totalDeDiasLetivos")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Long totalDeDiasLetivos(){
+        return bimestreResource.totalDeDiasLetivos();
+    }
+
+    @GET
+    @Path("/diasLetivosDeUmBimestre/{id}")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Long totalDeDiasLetivos(@PathParam("id") Long id){
+        return bimestreResource.diasLetivosBimestre(id);
+    }
+
     @DELETE
     @Path("/{id}")
     @Transactional

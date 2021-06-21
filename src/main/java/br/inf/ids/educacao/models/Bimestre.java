@@ -105,10 +105,7 @@ public class Bimestre implements Serializable {
         return alunos;
     }
 
-    public Long getdiasLetivosBimestre(){
 
-        return ChronoUnit.DAYS.between(inicioBimestre, fimBimestre);
-    }
 
     @Override
     public boolean equals(Object o) {
