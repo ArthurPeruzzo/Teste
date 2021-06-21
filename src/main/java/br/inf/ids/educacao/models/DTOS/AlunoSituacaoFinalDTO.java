@@ -8,13 +8,13 @@ public class AlunoSituacaoFinalDTO {
 
     private Long matricula;
     private String nome;
-    private Double mediaFinal;
+    private String mediaFinal;
     private SituacaoEnum situacaoFinal;
 
     public AlunoSituacaoFinalDTO() {
     }
 
-    public AlunoSituacaoFinalDTO(Long matricula, String nome, Double mediaFinal, SituacaoEnum situacaoFinal) {
+    public AlunoSituacaoFinalDTO(Long matricula, String nome, String mediaFinal, SituacaoEnum situacaoFinal) {
         this.matricula = matricula;
         this.nome = nome;
         this.mediaFinal = mediaFinal;
@@ -37,11 +37,11 @@ public class AlunoSituacaoFinalDTO {
         this.nome = nome;
     }
 
-    public Double getMediaFinal() {
+    public String getMediaFinal() {
         return mediaFinal;
     }
 
-    public void setMediaFinal(Double mediaFinal) {
+    public void setMediaFinal(String mediaFinal) {
         this.mediaFinal = mediaFinal;
     }
 

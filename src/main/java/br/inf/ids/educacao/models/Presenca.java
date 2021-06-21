@@ -30,7 +30,8 @@ import java.util.Objects;
                         targetClass = TotalDeFaltasDTO.class,
                         columns = {
                                 @ColumnResult(name="matricula", type = Long.class),
-                                @ColumnResult(name="totalDeFaltas", type = Integer.class),
+                                @ColumnResult(name="nome", type = String.class),
+                                @ColumnResult(name="totalDeFaltas", type = Integer.class)
                         }
                 )
         }

@@ -1,6 +1,9 @@
 package br.inf.ids.educacao.models.DTOS;
 
+import java.text.DecimalFormat;
+
 public class NotaAlunoPorBimestreDTO {
+    private static final DecimalFormat f = new DecimalFormat("#.##");
 
     private Long bimestre;
     private Long matricula;
@@ -14,7 +17,8 @@ public class NotaAlunoPorBimestreDTO {
         this.bimestre = bimestre;
         this.matricula = matricula;
         this.nome = nome;
-        this.mediaFinal = mediaFinal;
+        Double mediafinalFormatada = Double.parseDouble(f.format(mediaFinal).replace(",", "."));
+        this.mediaFinal = mediafinalFormatada;
     }
 
     public Long getBimestre() {
@@ -41,7 +45,7 @@ public class NotaAlunoPorBimestreDTO {
         this.nome = nome;
     }
 
-    public Double getMediaFinal() {
+    public Double  getMediaFinal() {
         return mediaFinal;
     }
 

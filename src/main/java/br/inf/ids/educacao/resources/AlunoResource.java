@@ -1,24 +1,24 @@
 package br.inf.ids.educacao.resources;
 
-import br.inf.ids.educacao.enums.BimestreEnum;
 import br.inf.ids.educacao.enums.SituacaoEnum;
 import br.inf.ids.educacao.excecoes.Exceptions;
-import br.inf.ids.educacao.models.*;
-import br.inf.ids.educacao.models.DTOS.*;
+import br.inf.ids.educacao.models.Aluno;
+import br.inf.ids.educacao.models.DTOS.AlunoDTO;
+import br.inf.ids.educacao.models.DTOS.AlunoSituacaoFinalDTO;
+import br.inf.ids.educacao.models.DTOS.NotaAlunoPorBimestreDTO;
+import br.inf.ids.educacao.models.DTOS.TotalDeFaltasDTO;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.SqlResultSetMapping;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Map;
 
 @RequestScoped
 public class AlunoResource {
+
+    private static final DecimalFormat f = new DecimalFormat("#.##");
 
     @Inject
     EntityManager entityManager;
@@ -27,6 +27,9 @@ public class AlunoResource {
 
     @Inject
     BimestreResource bimestreResource;
+
+    @Inject
+    PresencaResource presencaResource;
 
     public Aluno cadastrarAluno(Aluno aluno){ //ok
         entityManager.persist(aluno);
@@ -111,64 +114,12 @@ public class AlunoResource {
         return query.getResultList();
     }
 
-    public List<notaDasAvaliacoesPorBimestreDTO> notaDasAvaliacoesPorBimestre(Long matricula, Long bimestre) {//ok
-
-        String sql =" select aluno.matricula, aluno.nome, bimestre.id as bimestre, avaliacao.notaavaliacao as nota_da_avaliacao, tipo_avaliacao.nomeavaliacao as tipo_da_avaliacao "
-        +" from tb_aluno aluno "
-        +"inner join tb_alunobimestre aluno_bimestre "
-        +" on aluno.matricula = aluno_bimestre.aluno_id "
-        +" inner join tb_bimestre bimestre "
-        +" on aluno_bimestre.bimestre_id = bimestre.id "
-        +" inner join tb_avaliacao avaliacao "
-        +" on 	bimestre.id = avaliacao.bimestre_id "
-        +" and avaliacao.aluno_id = aluno.matricula "
-        +" inner join tb_tipoavaliacao tipo_avaliacao "
-        +" on avaliacao.tipoavaliacao_id = tipo_avaliacao.id "
-        +" where aluno.matricula = :matricula and bimestre.id = :bimestre "
-        +" order by bimestre.id ";
-        Query q = entityManager.createNativeQuery(sql, "notaDasAvaliacoesPorBimestreDTO")
-                .setParameter("matricula", matricula)
-                .setParameter("bimestre", bimestre);
-
-        return q.getResultList();
-    }
-
-    public List<FaltasAlunoDTO> faltasPorBimestreDeUmAluno(Long matricula){ //ok
-
-        String sqlNativo = " select bimestre.id as bimestre, aluno.matricula, aluno.nome, presenca.numerodefaltas "
-                +" from tb_aluno aluno"
-                +" inner join tb_presenca presenca "
-                +" on aluno.matricula = presenca.id_aluno "
-                +" inner join tb_bimestre bimestre "
-                +" on presenca.id_bimestre = bimestre.id "
-                +" where aluno.matricula = :matricula ";
-        Query query = entityManager.createNativeQuery(sqlNativo,"faltasAlunoDTO")
-                .setParameter("matricula", matricula);
-        return query.getResultList();
-    }
-
-    public TotalDeFaltasDTO totalDeFaltasDeUmAluno(Long matricula){ //ok
-
-        String sqlNativo = " select aluno.matricula, sum(presenca.numerodefaltas) as totalDeFaltas "
-                +" from tb_aluno aluno "
-                +" inner join tb_presenca presenca "
-                +" on aluno.matricula = presenca.id_aluno "
-                +"inner join tb_bimestre bimestre "
-                +" on presenca.id_bimestre = bimestre.id "
-                +"where aluno.matricula = :matricula "
-                +"group by aluno.matricula ";
-
-        Query query = entityManager.createNativeQuery(sqlNativo, "TotalDeFaltasDTO")
-                .setParameter("matricula", matricula);
-        return (TotalDeFaltasDTO) query.getSingleResult();
-    }
-
     public AlunoSituacaoFinalDTO situacaoFinalDoAluno(Long matricula){
         int codigo = 0;
         Double porcentagemPresenca = 0.0;
-        long totalDeDiasLetivos = bimestreResource.totalDeDiasLetivos(); //ok
-        AlunoDTO aluno = mediaFinalDoAluno(matricula); //ok, está chamando certo
-        TotalDeFaltasDTO totalDeFaltas = totalDeFaltasDeUmAluno(matricula);//ok, está chamando certo
+        long totalDeDiasLetivos = bimestreResource.totalDeDiasLetivos();
+        AlunoDTO aluno = mediaFinalDoAluno(matricula);
+        TotalDeFaltasDTO totalDeFaltas = presencaResource.totalDeFaltasDeUmAluno(matricula);
 
         porcentagemPresenca = 100.0 - ((totalDeFaltas.getTotalDeFaltas() * 100.0) / totalDeDiasLetivos);
 
@@ -180,7 +131,7 @@ public class AlunoResource {
         }else {
             codigo = 3;
         }
-        AlunoSituacaoFinalDTO alunoSituacaoFinal = new AlunoSituacaoFinalDTO(matricula, aluno.getNome(), aluno.getMediaFinal(), SituacaoEnum.valor(codigo));
+        AlunoSituacaoFinalDTO alunoSituacaoFinal = new AlunoSituacaoFinalDTO(matricula, aluno.getNome(), f.format(aluno.getMediaFinal()).replace(",", "."), SituacaoEnum.valor(codigo));
         return alunoSituacaoFinal;
     }
 }

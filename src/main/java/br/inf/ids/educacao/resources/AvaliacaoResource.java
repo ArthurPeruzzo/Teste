@@ -46,7 +46,7 @@ public class AvaliacaoResource {
         }
 
     }
-    public List<Avaliacao> listarAvaliacaoPorAvaliacao(){
+    public List<Avaliacao> listarAvaliacaoPorNota(){
         String queryJPQL = "SELECT s FROM Avaliacao s ORDER BY notaAvaliacao DESC";
         return entityManager.createQuery(queryJPQL, Avaliacao.class)
                 .setMaxResults(20)

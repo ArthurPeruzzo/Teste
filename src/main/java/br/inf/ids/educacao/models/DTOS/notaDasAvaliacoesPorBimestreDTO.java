@@ -1,8 +1,10 @@
 package br.inf.ids.educacao.models.DTOS;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 public class notaDasAvaliacoesPorBimestreDTO {
+    private static final DecimalFormat f = new DecimalFormat("#.##");
 
     private Long matricula;
     private String nome;
@@ -17,7 +19,8 @@ public class notaDasAvaliacoesPorBimestreDTO {
         this.matricula = matricula;
         this.nome = nome;
         this.bimestre = bimestre;
-        this.notaDaAvaliacao = notaDaAvaliacao;
+        Double notaDaAvaliacaoFormatada = Double.parseDouble(f.format(notaDaAvaliacao).replace(",", "."));
+        this.notaDaAvaliacao = notaDaAvaliacaoFormatada;
         this.tipoDaAvaliacao = tipoDaAvaliacao;
     }
 

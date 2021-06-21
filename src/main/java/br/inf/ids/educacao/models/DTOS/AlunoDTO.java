@@ -1,6 +1,9 @@
 package br.inf.ids.educacao.models.DTOS;
 
+import java.text.DecimalFormat;
+
 public class AlunoDTO {
+    private static final DecimalFormat f = new DecimalFormat("#.##");
 
     private Long matricula;
     private String nome;
@@ -12,7 +15,8 @@ public class AlunoDTO {
     public AlunoDTO(Long matricula, String nome, Double mediaFinal) {
         this.matricula = matricula;
         this.nome = nome;
-        this.mediaFinal = mediaFinal;
+        Double mediafinalFormatada = Double.parseDouble(f.format(mediaFinal).replace(",", "."));
+        this.mediaFinal = mediafinalFormatada;
     }
 
     public Long getMatricula() {

@@ -1,5 +1,7 @@
 package br.inf.ids.educacao.rest;
 
+import br.inf.ids.educacao.models.DTOS.FaltasAlunoDTO;
+import br.inf.ids.educacao.models.DTOS.TotalDeFaltasDTO;
 import br.inf.ids.educacao.models.Presenca;
 import br.inf.ids.educacao.resources.PresencaResource;
 
@@ -7,6 +9,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/presenca")
 public class PresencaRest {
@@ -43,5 +46,23 @@ public class PresencaRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public void uptadePresenca(Presenca presenca){
         presencaResource.updatePresenca(presenca);
+    }
+
+    @GET
+    @Path("/faltasDoAluno/{matricula}")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON) //ok
+    public List<FaltasAlunoDTO> faltasAluno
+            (@PathParam("matricula") Long matricula){
+        return presencaResource.faltasPorBimestreDeUmAluno(matricula);
+    }
+
+    @GET
+    @Path("/totalDefaltasDoAluno/{matricula}")//ok
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    public TotalDeFaltasDTO totalDefaltasAluno
+            (@PathParam("matricula") Long matricula){
+        return presencaResource.totalDeFaltasDeUmAluno(matricula);
     }
 }

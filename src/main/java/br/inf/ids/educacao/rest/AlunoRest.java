@@ -74,33 +74,6 @@ public class AlunoRest {
     }
 
     @GET
-    @Path("/notaDasAvaliacoesPorBimestre/{matricula}/{bimestre}")
-    @Transactional
-    @Consumes(MediaType.APPLICATION_JSON) //ok
-    public List<notaDasAvaliacoesPorBimestreDTO> notaDasAvaliacoesPorBimestre
-            (@PathParam("matricula") Long matricula, @PathParam("bimestre") Long bimestre){
-        return alunoResource.notaDasAvaliacoesPorBimestre(matricula, bimestre);
-    }
-
-    @GET
-    @Path("/faltasDoAluno/{matricula}")
-    @Transactional
-    @Consumes(MediaType.APPLICATION_JSON) //ok
-    public List<FaltasAlunoDTO> faltasAluno
-            (@PathParam("matricula") Long matricula){
-        return alunoResource.faltasPorBimestreDeUmAluno(matricula);
-    }
-
-    @GET
-    @Path("/totalDefaltasDoAluno/{matricula}")//ok
-    @Transactional
-    @Consumes(MediaType.APPLICATION_JSON)
-    public TotalDeFaltasDTO totalDefaltasAluno
-            (@PathParam("matricula") Long matricula){
-        return alunoResource.totalDeFaltasDeUmAluno(matricula);
-    }
-
-    @GET
     @Path("/mediaFinalDeUmAlunoEmCadaBimestre/{matricula}") //ok
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)

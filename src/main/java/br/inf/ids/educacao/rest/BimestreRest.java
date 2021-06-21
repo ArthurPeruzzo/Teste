@@ -1,6 +1,7 @@
 package br.inf.ids.educacao.rest;
 
 import br.inf.ids.educacao.models.Bimestre;
+import br.inf.ids.educacao.models.DTOS.notaDasAvaliacoesPorBimestreDTO;
 import br.inf.ids.educacao.models.TipoAvaliacao;
 import br.inf.ids.educacao.resources.BimestreResource;
 import br.inf.ids.educacao.resources.TipoAvaliacaoResource;
@@ -70,5 +71,14 @@ public class BimestreRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public void uptadeBimestre(Bimestre bimestre){
         bimestreResource.updateBimestre(bimestre);
+    }
+
+    @GET
+    @Path("/notaDasAvaliacoesPorBimestre/{matricula}/{bimestre}")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON) //ok
+    public List<notaDasAvaliacoesPorBimestreDTO> notaDasAvaliacoesPorBimestre
+            (@PathParam("matricula") Long matricula, @PathParam("bimestre") Long bimestre){
+        return bimestreResource.notaDasAvaliacoesPorBimestre(matricula, bimestre);
     }
 }

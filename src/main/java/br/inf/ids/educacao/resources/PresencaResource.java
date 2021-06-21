@@ -1,12 +1,16 @@
 package br.inf.ids.educacao.resources;
 
 import br.inf.ids.educacao.excecoes.Exceptions;
+import br.inf.ids.educacao.models.DTOS.FaltasAlunoDTO;
+import br.inf.ids.educacao.models.DTOS.TotalDeFaltasDTO;
 import br.inf.ids.educacao.models.Presenca;
 import br.inf.ids.educacao.models.TipoAvaliacao;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
 @RequestScoped
 public class PresencaResource {
@@ -44,5 +48,35 @@ public class PresencaResource {
             throw new Exceptions(id);
         }
 
+    }
+
+    public List<FaltasAlunoDTO> faltasPorBimestreDeUmAluno(Long matricula){ //ok
+
+        String sqlNativo = " select bimestre.id as bimestre, aluno.matricula, aluno.nome, presenca.numerodefaltas "
+                +" from tb_aluno aluno"
+                +" inner join tb_presenca presenca "
+                +" on aluno.matricula = presenca.id_aluno "
+                +" inner join tb_bimestre bimestre "
+                +" on presenca.id_bimestre = bimestre.id "
+                +" where aluno.matricula = :matricula ";
+        Query query = entityManager.createNativeQuery(sqlNativo,"faltasAlunoDTO")
+                .setParameter("matricula", matricula);
+        return query.getResultList();
+    }
+
+    public TotalDeFaltasDTO totalDeFaltasDeUmAluno(Long matricula){ //ok
+
+        String sqlNativo = " select aluno.matricula, aluno.nome, sum(presenca.numerodefaltas) as totalDeFaltas "
+                +" from tb_aluno aluno "
+                +" inner join tb_presenca presenca "
+                +" on aluno.matricula = presenca.id_aluno "
+                +"inner join tb_bimestre bimestre "
+                +" on presenca.id_bimestre = bimestre.id "
+                +"where aluno.matricula = :matricula "
+                +"group by aluno.matricula, aluno.nome ";
+
+        Query query = entityManager.createNativeQuery(sqlNativo, "TotalDeFaltasDTO")
+                .setParameter("matricula", matricula);
+        return (TotalDeFaltasDTO) query.getSingleResult();
     }
 }

@@ -32,11 +32,11 @@ public class AvaliacaoRest {
     }
 
     @GET
-    @Path("/listarAvaliacaoPorAvaliacao")
+    @Path("/listarAvaliacaoPorNota")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<Avaliacao> listarAvaliacaoPorAvaliacao(){
-        return avaliacaoResource.listarAvaliacaoPorAvaliacao();
+    public List<Avaliacao> listarAvaliacaoPorNota(){
+        return avaliacaoResource.listarAvaliacaoPorNota();
     }
 
     @DELETE
