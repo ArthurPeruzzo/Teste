@@ -27,7 +27,7 @@ public class BimestreRest {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/buscarBimestrePorId/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public Bimestre buscarBimestre(@PathParam("id") Long id){
@@ -59,7 +59,7 @@ public class BimestreRest {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/deletarBimestre/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public void deletarBimestre(@PathParam("id") Long id){
@@ -67,6 +67,7 @@ public class BimestreRest {
     }
 
     @PUT
+    @Path("/atualizarBimestre")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public void uptadeBimestre(Bimestre bimestre){

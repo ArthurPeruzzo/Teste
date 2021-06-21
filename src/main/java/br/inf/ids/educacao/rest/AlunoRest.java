@@ -90,6 +90,4 @@ public class AlunoRest {
             (@PathParam("matricula") Long matricula){
         return alunoResource.situacaoFinalDoAluno(matricula);
     }
-
-
 }

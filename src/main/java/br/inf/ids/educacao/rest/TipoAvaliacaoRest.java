@@ -23,7 +23,7 @@ public class TipoAvaliacaoRest {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/buscarTipoAvaliacao/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public TipoAvaliacao buscarTipoAvaliacao(@PathParam("id") Long id){
@@ -31,7 +31,7 @@ public class TipoAvaliacaoRest {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("deletarTipoAvaliacao/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public void deletarTipoAvaliacao(@PathParam("id") Long id){
@@ -39,6 +39,7 @@ public class TipoAvaliacaoRest {
     }
 
     @PUT
+    @Path("atualizarTipoAvaliacao")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public void uptadeTipoAvaliacao(TipoAvaliacao tipoAvaliacao){

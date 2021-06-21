@@ -26,7 +26,7 @@ public class PresencaRest {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/buscarPresenca/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public Presenca buscarPresenca(@PathParam("id") Long id){
@@ -34,7 +34,7 @@ public class PresencaRest {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/deletarPresenca/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public void deletarPresenca(@PathParam("id") Long id){
@@ -42,6 +42,7 @@ public class PresencaRest {
     }
 
     @PUT
+    @Path("/atualizarPresenca")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public void uptadePresenca(Presenca presenca){

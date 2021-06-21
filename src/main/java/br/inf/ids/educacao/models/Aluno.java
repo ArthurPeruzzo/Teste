@@ -1,15 +1,14 @@
 package br.inf.ids.educacao.models;
 
-import br.inf.ids.educacao.enums.SituacaoEnum;
 import br.inf.ids.educacao.models.DTOS.AlunoDTO;
-import br.inf.ids.educacao.models.DTOS.AlunoSituacaoFinalDTO;
 import br.inf.ids.educacao.models.DTOS.NotaAlunoPorBimestreDTO;
-import br.inf.ids.educacao.models.DTOS.notaDasAvaliacoesPorBimestreDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 @Entity
 @SqlResultSetMapping(
         name = "mediaFinalAlunoDTO",
@@ -56,7 +55,7 @@ public class Aluno implements Serializable {
     private List<Presenca> presencas = new ArrayList<>();
 
     @JsonIgnore
-    @ManyToMany         //nomeTabela        //nome da chave estrangeira aluno e bimestre
+    @ManyToMany        //nomeTabela        //nome da chave estrangeira aluno e bimestre
     @JoinTable(name = "tb_AlunoBimestre", joinColumns = @JoinColumn(name = "aluno_id"), inverseJoinColumns = @JoinColumn(name = "bimestre_id"))
     private List<Bimestre> bimestres = new ArrayList<>();
 
@@ -113,109 +112,6 @@ public class Aluno implements Serializable {
     public List<Bimestre> getBimestres() {
         return bimestres;
     }
-
-    public List<NotaBimestre> mediaAlunoPorBimestre(){
-        List<NotaBimestre> returnNotas = new ArrayList<>();
-        Map<Bimestre, List<Avaliacao>> agrupados = agrupar(avaliacoes);
-
-        for(Map.Entry<Bimestre, List<Avaliacao>> valores : agrupados.entrySet()){ //entrySet cria um conjunto dos mesmos elementos contidos no mapa hash
-
-            Bimestre bimestreAtual = valores.getKey(); //pega a chave de 1 campo da tabela hash
-            List<Avaliacao> avaliacoesPorBimestre = valores.getValue(); //pega todos os valores de 1 chave da tabela hash
-
-            double media = 0.0;
-            double somaPesos = 0.0;
-
-            for(Avaliacao a : avaliacoesPorBimestre){//soma dos pesos por cada avaliação
-                somaPesos += a.getTipoAvaliacao().getPesoAvaliacao();
-            }
-
-            double mediaBimestre=0.0;
-            for(Avaliacao a : avaliacoesPorBimestre){ //media por bimestre
-                media += (a.getNotaAvaliacao() * (a.getTipoAvaliacao().getPesoAvaliacao()));
-            }
-
-            mediaBimestre = media/somaPesos;
-            NotaBimestre notaBimestre = new NotaBimestre(bimestreAtual, mediaBimestre);
-            returnNotas.add(notaBimestre);
-        }
-
-        return returnNotas;
-    }
-
-    public Map<Bimestre, List<Avaliacao>> agrupar(List<Avaliacao> avaliacaos) {
-        Map<Bimestre, List<Avaliacao>> agrupados = new HashMap<>();
-
-        for(Avaliacao avaliacao: avaliacoes){
-            Bimestre bimestreAtual = avaliacao.getBimestre();
-            if (!agrupados.containsKey(bimestreAtual)) { //se a tabela hash ainda não tiver um bimestre, ela insere
-                List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
-                avaliacoes.add(avaliacao);
-                agrupados.put(bimestreAtual, avaliacoes); //adicionar na tabela hash a avaliacao respectiva ao bimestre
-            } else {
-                List<Avaliacao> avaliacoesPassadas = agrupados.get(bimestreAtual); //pega o bismestre atual
-                avaliacoesPassadas.add(avaliacao);
-            }
-        }
-
-        return agrupados;
-    }
-
-    public double MediaFinal(){
-        double mediaFinal = 0.0;
-        for(NotaBimestre media : mediaAlunoPorBimestre()){
-            mediaFinal += media.getNota();
-        }
-        return mediaFinal/4;
-    }
-
-    public List<PresencaBimestre> somaDasFaltas(){
-        List<PresencaBimestre> returnPresencas = new ArrayList<>();
-        Map<Bimestre, List<Presenca>> agrupados = agruparPresencas(presencas);
-
-        for(Map.Entry<Bimestre, List<Presenca>> valores : agrupados.entrySet()){ //entrySet cria um conjunto dos mesmos elementos contidos no mapa hash
-
-            Bimestre bimestreAtual = valores.getKey(); //pega a chave de 1 campo da tabela hash
-            List<Presenca> presencasPorBimestre = valores.getValue(); //pega todos os valores de 1 chave da tabela hash
-
-            int somaPresenca=0;
-            for(Presenca a : presencasPorBimestre){ //presenca por bimestre
-                somaPresenca += a.getNumeroDeFaltas();
-            }
-
-            PresencaBimestre presencaBimestre = new PresencaBimestre(bimestreAtual, somaPresenca );
-            returnPresencas.add(presencaBimestre);
-        }
-
-        return returnPresencas;
-
-    }
-
-    public Map<Bimestre, List<Presenca>> agruparPresencas(List<Presenca> presencas) {
-        Map<Bimestre, List<Presenca>> agrupados = new HashMap<>();
-
-        for (Presenca presenca : presencas) {
-            Bimestre bimestreAtual = presenca.getBimestre();
-            if (!agrupados.containsKey(bimestreAtual)) { //se a tabela hash ainda não tiver um bimestre, ela insere
-                List<Presenca> p = new ArrayList<>();
-                p.add(presenca);
-                agrupados.put(bimestreAtual, p); //adicionar na tabela hash a presenca respectiva ao bimestre
-            } else {
-                List<Presenca> pres = agrupados.get(bimestreAtual); //pega o bismestre atual
-                pres.add(presenca);
-            }
-        }
-        return agrupados;
-    }
-
-    public int TotalFaltas(){
-        int totalFaltas=0;
-        for(PresencaBimestre falta : somaDasFaltas()){
-            totalFaltas += falta.getPresenca();
-        }
-        return totalFaltas;
-    }
-
 
     @Override
     public boolean equals(Object o) {

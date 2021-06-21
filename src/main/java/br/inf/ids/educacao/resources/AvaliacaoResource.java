@@ -3,10 +3,13 @@ package br.inf.ids.educacao.resources;
 import br.inf.ids.educacao.excecoes.Exceptions;
 import br.inf.ids.educacao.models.Avaliacao;
 import br.inf.ids.educacao.models.TipoAvaliacao;
+import org.jboss.resteasy.annotations.Status;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @RequestScoped
@@ -46,6 +49,7 @@ public class AvaliacaoResource {
         }
 
     }
+    
     public List<Avaliacao> listarAvaliacaoPorNota(){
         String queryJPQL = "SELECT s FROM Avaliacao s ORDER BY notaAvaliacao DESC";
         return entityManager.createQuery(queryJPQL, Avaliacao.class)
