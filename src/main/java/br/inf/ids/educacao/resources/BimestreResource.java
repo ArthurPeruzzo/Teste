@@ -55,6 +55,11 @@ public class BimestreResource {
         return entityManager.createQuery(queryJPQL, Bimestre.class).getResultList();
     }
 
+    public Long contarBimestres(){
+        String queryJPQL = " select count(*) from Bimestre ";
+        return entityManager.createQuery(queryJPQL, Long.class).getSingleResult();
+    }
+
 
     public long totalDeDiasLetivos(){
         long totalDeDiasLetivos = 0l;
@@ -67,8 +72,9 @@ public class BimestreResource {
 
     public long diasLetivosBimestre(Long id){
 
-    String queryJPQL = " SELECT s FROM Bimestre s where s.id =1 ";
-      Query q = entityManager.createQuery(queryJPQL, Bimestre.class);
+    String queryJPQL = " SELECT s FROM Bimestre s where s.id =:id ";
+      Query q = entityManager.createQuery(queryJPQL, Bimestre.class)
+              .setParameter("id", id);
         Bimestre bimestre = (Bimestre) q.getSingleResult();
 
         return ChronoUnit.DAYS.between(bimestre.getInicioBimestre(), bimestre.getFimBimestre());
