@@ -2,6 +2,8 @@ package br.inf.ids.educacao.models.DTOS;
 
 import br.inf.ids.educacao.enums.SituacaoEnum;
 
+import java.util.Objects;
+
 public class AlunoSituacaoFinalDTO {
 
     private Long matricula;
@@ -49,5 +51,28 @@ public class AlunoSituacaoFinalDTO {
 
     public void setSituacaoFinal(SituacaoEnum situacaoFinal) {
         this.situacaoFinal = situacaoFinal;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AlunoSituacaoFinalDTO that = (AlunoSituacaoFinalDTO) o;
+        return matricula.equals(that.matricula);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(matricula);
+    }
+
+    @Override
+    public String toString() {
+        return "AlunoSituacaoFinalDTO{" +
+                "matricula=" + matricula +
+                ", nome='" + nome + '\'' +
+                ", mediaFinal=" + mediaFinal +
+                ", situacaoFinal=" + situacaoFinal +
+                '}';
     }
 }

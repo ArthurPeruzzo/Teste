@@ -52,4 +52,6 @@ public class AvaliacaoResource {
                 .setMaxResults(20)
                 .getResultList();
     }
+
+
 }

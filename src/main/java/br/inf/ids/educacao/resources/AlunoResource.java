@@ -25,6 +25,7 @@ public class AlunoResource {
 
     Aluno aluno;
 
+    @Inject
     BimestreResource bimestreResource;
 
     public Aluno cadastrarAluno(Aluno aluno){ //ok
@@ -164,12 +165,14 @@ public class AlunoResource {
 
     public AlunoSituacaoFinalDTO situacaoFinalDoAluno(Long matricula){
         int codigo = 0;
-        double porcentagemPresenca = 0.0;
-        Long totalDeDiasLetivos = bimestreResource.totalDeDiasLetivos();
-        AlunoDTO aluno = mediaFinalDoAluno(matricula);
-        TotalDeFaltasDTO totalDeFaltas = totalDeFaltasDeUmAluno(matricula);
+        Double porcentagemPresenca = 0.0;
+        long totalDeDiasLetivos = bimestreResource.totalDeDiasLetivos(); //ok
+        AlunoDTO aluno = mediaFinalDoAluno(matricula); //ok, está chamando certo
+        TotalDeFaltasDTO totalDeFaltas = totalDeFaltasDeUmAluno(matricula);//ok, está chamando certo
 
         porcentagemPresenca = 100.0 - ((totalDeFaltas.getTotalDeFaltas() * 100.0) / totalDeDiasLetivos);
+
+
         if(porcentagemPresenca < 75.0 || aluno.getMediaFinal() < 5.0){
             codigo = 2;
         }else if(porcentagemPresenca >= 75.0 && aluno.getMediaFinal() >= 6.0){
@@ -177,23 +180,7 @@ public class AlunoResource {
         }else {
             codigo = 3;
         }
-        AlunoSituacaoFinalDTO alunoSituacaoFinal = new AlunoSituacaoFinalDTO(1111l, "joao", 9.8, SituacaoEnum.APROVADO);
+        AlunoSituacaoFinalDTO alunoSituacaoFinal = new AlunoSituacaoFinalDTO(matricula, aluno.getNome(), aluno.getMediaFinal(), SituacaoEnum.valor(codigo));
         return alunoSituacaoFinal;
     }
-    /*public SituacaoEnum SituacaoFinal(){
-        double porcentagemDaPresenca = 0.0;
-        int codigo = 0;
-        for(Bimestre bimestre : bimestres){
-            porcentagemDaPresenca = 100.0 - ((TotalFaltas() * 100.0) / (bimestre.getdiasLetivosBimestre() * 4.0));
-            if(porcentagemDaPresenca < 75.0 || MediaFinal() < 5.0){
-                codigo = 2;
-            }else if(porcentagemDaPresenca >= 75.0 && MediaFinal() >= 6.0){
-                codigo = 1;
-            }else
-                codigo = 3;
-        }
-        return SituacaoEnum.valor(codigo);
-    }*/
-
-
 }

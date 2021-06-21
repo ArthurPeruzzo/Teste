@@ -1,10 +1,7 @@
 package br.inf.ids.educacao.resources;
 
 import br.inf.ids.educacao.excecoes.Exceptions;
-import br.inf.ids.educacao.models.Aluno;
 import br.inf.ids.educacao.models.Bimestre;
-import br.inf.ids.educacao.models.TipoAvaliacao;
-import com.arjuna.ats.internal.jdbc.drivers.modifiers.list;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -58,8 +55,8 @@ public class BimestreResource {
     }
 
 
-    public Long totalDeDiasLetivos(){
-        Long totalDeDiasLetivos = 0l;
+    public long totalDeDiasLetivos(){
+        long totalDeDiasLetivos = 0l;
         List<Bimestre> bimestres = listarBimestresPorData();
         for(Bimestre bimestre : bimestres){
             totalDeDiasLetivos += ChronoUnit.DAYS.between(bimestre.getInicioBimestre(), bimestre.getFimBimestre());
@@ -67,7 +64,7 @@ public class BimestreResource {
         return  totalDeDiasLetivos;
     }
 
-    public Long diasLetivosBimestre(Long id){
+    public long diasLetivosBimestre(Long id){
 
     String queryJPQL = " SELECT s FROM Bimestre s where s.id =1 ";
       Query q = entityManager.createQuery(queryJPQL, Bimestre.class);

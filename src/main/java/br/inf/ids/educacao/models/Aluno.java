@@ -2,6 +2,7 @@ package br.inf.ids.educacao.models;
 
 import br.inf.ids.educacao.enums.SituacaoEnum;
 import br.inf.ids.educacao.models.DTOS.AlunoDTO;
+import br.inf.ids.educacao.models.DTOS.AlunoSituacaoFinalDTO;
 import br.inf.ids.educacao.models.DTOS.NotaAlunoPorBimestreDTO;
 import br.inf.ids.educacao.models.DTOS.notaDasAvaliacoesPorBimestreDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -45,7 +45,7 @@ public class BimestreRest {
     @Path("/totalDeDiasLetivos")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public Long totalDeDiasLetivos(){
+    public long totalDeDiasLetivos(){
         return bimestreResource.totalDeDiasLetivos();
     }
 
@@ -53,7 +53,7 @@ public class BimestreRest {
     @Path("/diasLetivosDeUmBimestre/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public Long totalDeDiasLetivos(@PathParam("id") Long id){
+    public long totalDeDiasLetivosDeUmBimestre(@PathParam("id") Long id){
         return bimestreResource.diasLetivosBimestre(id);
     }
 
